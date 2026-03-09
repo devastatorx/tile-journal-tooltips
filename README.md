@@ -13,10 +13,7 @@ Tile tooltips are triggered by mouse over/hover.  Tooltip content is pulled from
 ---
  Installation
 
-Install via Foundry
-
-This is the recommended method.
-Copy the link below ((links to the most current release)) or go to the releases page for the current release and then paste that into Foundry's 'Install Module' window.
+Install via Foundry module.json.  This is the recommended method or by using searching Foundry's built in package manager once submitted and approved.  Copy the link below ((links to the most current release)) or go to the releases page for the current release and then paste that into Foundry's 'Install Module' window.
 
 ```
 https://github.com/devastatorx/tile-journal-tooltips/releases/latest/download/module.json
@@ -35,15 +32,6 @@ Currently the module only supports text from Journals.  I am planning on adding 
 
 ---
 
-Planned Features
-
-- [ ] Journal image support
-- [ ] Tooltip themes
-- [ ] Custom styling through either css or via the Tooltip configuration interface
-- [ ] Support for various Journal Page types
-
----
-
 Usage
 
 After enabling the module:
@@ -57,53 +45,31 @@ After enabling the module:
 
 ![Tooltip Configuration](/images/2.png)
 
----
-
-Enabling Tooltips
-
-Enable the tooltip by checking 'Enable Tooltip'
+5. Enable the tooltip by checking 'Enable Tooltip'
 
 ![Enable Tooltip](/images/3.png)
+
+6. Select a Journal Entry
+7. Optionally select a Journal Page from the selected Journal Entry
+8. Save and apply the changes, this should update the 'Cache Status' with a date and time stamp.
 
 ---
 
 Settings
 
-Enable Tooltip
+Enable Tooltip - activates tooltip functionality for the tile.
 
-Activates tooltip functionality for the tile.
+Journal Entry (Source) - select the Journal Entry used as the tooltip source.  Players **do not need permissions** to this journal.
 
----
+Journal Page - if the journal contains multiple pages you may select a specific page.  If no page is selected the first page of the selected Journal Entry is used.  If no pages exist the Journal Entry content is used.
 
-Journal Entry (Source)
-
-Select the Journal Entry used as the tooltip source.
-
-Players **do not need permissions** to this journal.
-
----
-
-Journal Page
-
-If the journal contains multiple pages you may select a specific page.
-
-If no page is selected the first page of the selected Journal Entry is used.  If no pages exist the Journal Entry content is used.
-
----
-
-Cache Status
-
-When the tile is saved the journal content is cached to the tile and a timestamp shows when the cache was last created.  By caching the journal to the tile, players do not need permissions to the journals used to create any tooltips.
-
-If the journal entry changes, such as updating information in the selected page/entry **you must re-cache the tooltip**
+Cache Status - when the tile is saved the journal content is cached to the tile and a timestamp shows when the cache was last created.  By caching the journal to the tile, players do not need permissions to the journals used to create any tooltips.  If the journal entry changes, such as updating information in the selected page/entry **you must re-cache the tooltip**
 
 ---
 
 Known Issues
 
-Sometimes, when creating a tile tooltip for the first time caching may fail
-
-Ensure the tile has a name set in the 'Appearance' tab
+Sometimes, when creating a tile tooltip for the first time caching may fail (no date and timestamp displayed for 'Cache Status')
 
 If caching fails:
 
