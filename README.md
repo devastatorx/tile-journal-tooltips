@@ -1,7 +1,7 @@
 # Tile Tooltip Journal
 ![Foundry Version](https://img.shields.io/badge/Foundry-v13-green)
 ![License](https://img.shields.io/badge/license-GPL%203.0-blue)
-![![Install Module](https://img.shields.io/badge/Foundry-Install%20Module-red)](manifest-url)
+![Install Module](https://img.shields.io/badge/Foundry-Install%20Module-orange)(manifest-url)
 
 Display **interactive tooltips on tiles** using content pulled directly from Journal Entries or Journal Pages.
 
