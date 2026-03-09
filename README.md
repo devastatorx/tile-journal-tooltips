@@ -36,9 +36,8 @@ Hovering a tile displays a **fade-in tooltip** pulled from a journal entry.
 
 * Tile tooltips triggered by mouse over/hover
 * Fade in and fade out
-* Tooltip content is pulled content from Journal Entries or Journal Pages
-* Players do not need journal permissions
-* Prevents story spoilers
+* Tooltip content is pulled from Journal Entries or Journal Pages
+* Players do not need journal permissions, preventing spoilers
 * Does not conflict and works alongside Monk's Active Tile Triggers ((MATT))
 * System agnostic
 * Tooltips display only when the Token Control layer is active
