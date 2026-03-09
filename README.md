@@ -7,7 +7,7 @@ A Foundry v13 module to display fade in/out tooltips on tiles using content pull
 
 This can be used for environmental descriptions, map lore, reminders, making maps more interactive, and probably a lot more.
 
-Tile tooltips are triggered by mouse over/hover.  Tooltip content is pulled from Journal Entries or Journal Pages and players do not need journal permissions.  Does not conflict and works alongside Monk's Active Tile Triggers ((MATT)), system agnostic, tooltips display only when the 'Token Control' layer is active.
+Tile tooltips are triggered by mouse over/hover.  Tooltip content is pulled from Journal Entries or Journal Pages and players do not need journal permissions.  Does not conflict with and works alongside Monk's Active Tile Triggers ((MATT)), system agnostic, tooltips display only when the 'Token Control' layer is active.
 
 
 ---
