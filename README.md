@@ -3,23 +3,18 @@
 ![License](https://img.shields.io/badge/license-GPL%203.0-blue)
 [![Install Module](https://img.shields.io/badge/Foundry-Install%20Module-orange)](manifest-url)
 
-Display **interactive tooltips on tiles** using content pulled directly from Journal Entries or Journal Pages.
+Display fade in/out tooltips on tiles using content pulled directly from Journal Entries or Journal Pages.
 
-Perfect for:
-
-* Environmental descriptions
-* Map lore
-* GM reminders
-* Hidden worldbuilding
-* Interactive map exploration
+This can be used for environmental descriptions, map lore, reminders, making maps more interactive, and probably a lot more.
 
 ---
 
-# Install
+# Installation
 
 ### Install via Foundry
 
-Paste this **Manifest URL** into Foundry's **Install Module** window.
+This is the recommended method.
+Copy the link below ((links to the most current release)) and right click on module.json for the current release and then paste that into Foundry's 'Install Module' window.
 
 ```
 https://github.com/devastatorx/tile-journal-tooltips/releases/latest/download/module.json
@@ -39,14 +34,14 @@ Hovering a tile displays a **fade-in tooltip** pulled from a journal entry.
 
 # Features
 
-* Tile tooltips triggered by **mouse hover**
-* Smooth **fade-in / fade-out animations**
-* Pulls content from **Journal Entries or Journal Pages**
-* **Players do not need journal permissions**
+* Tile tooltips triggered by mouse over/hover
+* Fade in and fade out
+* Tooltip content is pulled content from Journal Entries or Journal Pages
+* Players do not need journal permissions
 * Prevents story spoilers
-* Works with **Monk's Active Tile Triggers**
-* **System agnostic**
-* Tooltips display **only while using Token Controls**
+* Does not conflict and works alongside Monk's Active Tile Triggers ((MATT))
+* System agnostic
+* Tooltips display only when the Token Control layer is active
 
 ---
 
@@ -69,10 +64,10 @@ Currently the module only supports text from Journals.  I am planning on adding 
 
 After enabling the module:
 
-1. Select **Tile Controls**
+1. Select Tile Controls
 2. Place or select a tile
-3. Open **Tile Settings**
-4. Navigate to the **Tooltip tab**
+3. Open the settings window for the tile
+4. Navigate to the 'Tooltip' tab
 
 ![Tooltip Settings](/images/1.png)
 
@@ -82,9 +77,7 @@ After enabling the module:
 
 # Enabling Tooltips
 
-Enable the tooltip by checking:
-
-**Enable Tooltip**
+Enable the tooltip by checking 'Enable Tooltip'
 
 ![Enable Tooltip](/images/3.png)
 
@@ -110,26 +103,21 @@ Players **do not need permissions** to this journal.
 
 If the journal contains multiple pages you may select a specific page.
 
-If none is selected:
-
-* The **first page** is used
-* If no pages exist the **Journal Entry content** is used
+If no page is selected the first page of the selected Journal Entry is used.  If no pages exist the Journal Entry content is used.
 
 ---
 
 ## Cache Status
 
-When the tile is saved the journal content is **cached to the tile**.
+When the tile is saved the journal content is cached to the tile.
 
 A timestamp shows when the cache was last created.
 
-Caching allows tooltips to display **without journal permissions**.
+Caching allows tooltips to display without journal permissions granted to players.
 
 ### Important
 
-If the journal entry changes:
-
-You must **re-cache the tooltip**.
+If the journal entry changes **you must re-cache the tooltip**
 
 ---
 
@@ -138,16 +126,16 @@ You must **re-cache the tooltip**.
 <details>
 <summary>Initial tooltip caching may fail</summary>
 
-Ensure the tile has a **name set in the Appearance tab**.
+Ensure the tile has a name set in the 'Appearance' tab
 
 If caching fails:
 
-1. Click **Apply** or **Update Tile**
+1. Click 'Apply' or 'Update Tile'
 2. Reopen the tile settings
-3. Go back to **Tooltip tab**
+3. Go back to 'Tooltip' tab
 4. Apply again
 
-If the **Cache Status shows a timestamp**, it worked.
+If the 'Cache Status' shows a timestamp, it worked.
 
 </details>
 
@@ -167,9 +155,9 @@ Fix planned.
 <details>
 <summary>Tooltip persists after scene change</summary>
 
-If a tooltip is visible while switching scenes it may remain visible.
+If a tooltip is visible while switching scenes it may remain visible on the newly loaded scene.
 
-Moving the mouse over the **right sidebar** will fade it out.
+Moving the mouse over the right sidebar should cause it to fade out.
 
 Fix planned.
 
