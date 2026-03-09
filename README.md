@@ -13,7 +13,7 @@ Tile tooltips are triggered by mouse over/hover.  Tooltip content is pulled from
 ---
  Installation
 
-Install via Foundry module.json.  This is the recommended method or by using searching Foundry's built in package manager once submitted and approved.  Copy the link below ((links to the most current release)) or go to the releases page for the current release and then paste that into Foundry's 'Install Module' window.
+Install via Foundry module.json.  This is the recommended method or by searching Foundry's built in package manager once submitted and approved.  Copy the link below ((links to the most current release)) or go to the releases page for the current release and then paste that into Foundry's 'Install Module' window.
 
 ```
 https://github.com/devastatorx/tile-journal-tooltips/releases/latest/download/module.json
