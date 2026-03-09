@@ -2,7 +2,7 @@
   "id": "tile-journal-tooltips",
   "title": "Tile Journal Tooltips",
   "description": "This module adds a tooltip tab to the 'Tile configuration' and displays interactive tooltips on tiles using journal entries.",
-  "version": "0.3.0",
+  "version": "#{VERSION}#",
   "authors": [
     {
       "name": "devastatorx",
@@ -16,9 +16,9 @@
   "esmodules": ["scripts/main.js"],
   "styles": ["styles/tooltip.css"],
   "languages": [],
-  "url": "https://github.com/devastatorx/tile-journal-tooltips",
-  "manifest": "https://github.com/devastatorx/tile-journal-tooltips/releases/latest/download/module.json",
-  "download": "https://github.com/devastatorx/tile-journal-tooltips/releases/latest/download/module.zip",
+  "url": "#{URL}#",
+  "manifest": "#{MANIFEST}#",
+  "download": "#{DOWNLOAD}#",
   "license": "GPL-3.0",
   "relationships": {
   "systems": [],
