@@ -56,11 +56,11 @@ Hovering a tile displays a **fade-in tooltip** pulled from a journal entry.
 
 Currently supported:
 
-✔ Journal **text content**
+ Journal text content
 
 Not yet supported:
 
-❌ Journal **images**
+ Journal images
 
 Image support is planned for a future update.
 
@@ -189,21 +189,7 @@ Fix planned.
 
 # Compatibility
 
-| Foundry Version | Support |
-| --------------- | ------- |
-| V13             | ✔       |
-| V12             | ❌       |
-
----
-
-# Contributing
-
-Contributions and feature suggestions are welcome.
-
-Open:
-
-* Issues
-* Pull requests
+ Foundry v13
 
 ---
 
@@ -214,7 +200,3 @@ This project is licensed under **GPL 3.0**.
 See:
 
 LICENSE
-
----
-
-⭐ If you find this module useful, consider starring the repo.
