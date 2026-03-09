@@ -52,24 +52,16 @@ Hovering a tile displays a **fade-in tooltip** pulled from a journal entry.
 
 # Limitations
 
-Currently supported:
-
- Journal text content
-
-Not yet supported:
-
- Journal images
-
-Image support is planned for a future update.
+Currently the module only supports text from Journals.  I am planning on adding image support and support for the various Journal Page types.
 
 ---
 
 # Planned Features
 
-* Journal **image support**
-* Tooltip **themes**
-* Custom **tooltip styling**
-* Expanded **journal page type support**
+- [ ] Journal image support
+- [ ] Tooltip themes
+- [ ] Custom styling through either css or via the Tooltip configuration interface
+- [ ] Support for various Journal Page types
 
 ---
 
