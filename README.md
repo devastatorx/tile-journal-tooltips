@@ -1,7 +1,7 @@
 # Tile Tooltip Journal
 [![Install Module](https://img.shields.io/badge/Foundry-Install%20Module-red)](manifest-url)
 
-![Foundry Version](https://img.shields.io/badge/foundry-v13-compatible-green)
+![Foundry Version](https://img.shields.io/badge/Foundry-v13-green)
 ![License](https://img.shields.io/badge/license-GPL%203.0-blue)
 ![Module Type](https://img.shields.io/badge/type-FoundryVTT%20Module-orange)
 
