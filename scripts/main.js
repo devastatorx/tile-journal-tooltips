@@ -130,21 +130,23 @@ function getCachedTooltip(tileDoc) {
 }
 
 async function clearCache(tileDoc) {
-  await tileDoc.unsetFlag(MODULE_ID, FLAGS.cachedHtml);
-  await tileDoc.unsetFlag(MODULE_ID, FLAGS.cachedTitle);
-  await tileDoc.unsetFlag(MODULE_ID, FLAGS.cachedUpdated);
+  await tileDoc.update({
+    flags: {
+      [MODULE_ID]: {
+        [`-=${FLAGS.cachedHtml}`]:    null,
+        [`-=${FLAGS.cachedTitle}`]:   null,
+        [`-=${FLAGS.cachedUpdated}`]: null
+      }
+    }
+  }, { render: false });
 }
 
-/**
- * GM-only: reads the selected journal entry/page content and caches enriched HTML onto the Tile flags
- * Players will only ever read cachedHtml/cachedTitle from the tile
- */
-async function buildCacheFromJournal(tileDoc) {
+async function buildCacheFromJournal(tileDoc, overrides = {}) {
   if (!game.user.isGM) return;
 
   const enabled = !!tileDoc.getFlag(MODULE_ID, FLAGS.enabled);
-  const journalId = tileDoc.getFlag(MODULE_ID, FLAGS.journalId) ?? "";
-  const pageId = tileDoc.getFlag(MODULE_ID, FLAGS.pageId) ?? "";
+  const journalId = overrides.journalId ?? tileDoc.getFlag(MODULE_ID, FLAGS.journalId) ?? "";
+  const pageId    = overrides.pageId    ?? tileDoc.getFlag(MODULE_ID, FLAGS.pageId)    ?? "";
 
   if (!enabled || !journalId) {
     await clearCache(tileDoc);
@@ -160,35 +162,52 @@ async function buildCacheFromJournal(tileDoc) {
   const pages = getJournalPages(je);
 
   let title = je.name;
-  let raw = "";
+  let enriched = "";
 
-  // if a specific page is selected, prefer it
-  if (pageId && pages.length) {
-    const page = pages.find(p => p.id === pageId);
-    if (page) {
-      title = `${je.name}: ${page.name}`;
-      raw = page.text?.content ?? "";
+  // resolve which page to use
+  let page = null;
+  if (pageId && pages.length) page = pages.find(p => p.id === pageId) ?? null;
+  if (!page && pages.length) page = pages[0];
+
+  if (page) {
+    title = `${je.name}: ${page.name}`;
+
+    switch (page.type) {
+      case "image": {
+        const src = page.src ?? "";
+        const caption = page.image?.caption
+          ? `<p class="tjt-caption">${foundry.utils.escapeHTML(page.image.caption)}</p>`
+          : "";
+        enriched = src
+          ? `<div class="tjt-image-page"><img src="${src}" alt="${foundry.utils.escapeHTML(page.name)}"/>${caption}</div>`
+          : "<p><em>(No image set)</em></p>";
+        break;
+      }
+
+      case "text":
+      default: {
+        const raw = page.text?.content ?? "";
+        enriched = raw.trim() ? await TextEditor.enrichHTML(raw, { async: true }) : "";
+        break;
+      }
     }
+  } else {
+    // legacy: journal entry with no pages
+    const raw = je.content ?? "";
+    enriched = raw.trim() ? await TextEditor.enrichHTML(raw, { async: true }) : "";
   }
 
-  // fallback to first page if present
-  if (!raw?.trim() && pages.length) {
-    const page0 = pages[0];
-    title = `${je.name}: ${page0.name}`;
-    raw = page0.text?.content ?? "";
-  }
+  if (!enriched?.trim()) enriched = "<p><em>(Empty Journal content)</em></p>";
 
-  // fallback to legacy entry content if needed
-  if (!raw?.trim()) raw = je.content ?? "";
-
-  if (!raw?.trim()) raw = "<p><em>(Empty Journal content)</em></p>";
-
-  // enrich once as GM and cache the resulting HTML
-  const enriched = await TextEditor.enrichHTML(raw, { async: true });
-
-  await tileDoc.setFlag(MODULE_ID, FLAGS.cachedTitle, title);
-  await tileDoc.setFlag(MODULE_ID, FLAGS.cachedHtml, enriched);
-  await tileDoc.setFlag(MODULE_ID, FLAGS.cachedUpdated, Date.now());
+  await tileDoc.update({
+    flags: {
+      [MODULE_ID]: {
+        [FLAGS.cachedTitle]:   title,
+        [FLAGS.cachedHtml]:    enriched,
+        [FLAGS.cachedUpdated]: Date.now()
+      }
+    }
+  }, { render: false });
 }
 
 function tooltipFlagsTouched(change) {
@@ -199,14 +218,14 @@ function tooltipFlagsTouched(change) {
   return enabled !== undefined || journalId !== undefined || pageId !== undefined;
 }
 
-/* tileConfig tab injection */
+/* tab injection to display settings */
 
 Hooks.once("init", async () => {
   // preload HBS
   await loadTemplates([`modules/${MODULE_ID}/templates/tile-tooltip-tab.hbs`]);
 });
 
-// detect the existing tab group from <a data-group="sheet"...> and inject tab + panel.
+// detect existing tab group
 function addTooltipTabToTileConfig(app, html) {
   const root = html instanceof HTMLElement ? html : html?.[0];
   if (!root) return;
@@ -222,7 +241,7 @@ function addTooltipTabToTileConfig(app, html) {
   // prevent duplicates
   if (nav.querySelector(`a[data-tab="${MODULE_ID}"]`) || root.querySelector(`.tab[data-tab="${MODULE_ID}"]`)) return;
 
-  // find existing panel for the group and use its parent as container
+
   const existingPanel = root.querySelector(`.tab[data-group="${group}"]`);
   const panelContainer = existingPanel?.parentElement;
   if (!panelContainer) return;
@@ -242,7 +261,7 @@ function addTooltipTabToTileConfig(app, html) {
   const hasCache = !!cachedHtml?.trim();
   const cacheUpdated = formatCacheTimestamp(tileDoc.getFlag(MODULE_ID, FLAGS.cachedUpdated));
 
-  // add tab button use v13 format
+
   const a = document.createElement("a");
   a.dataset.action = "tab";
   a.dataset.group = group;
@@ -250,7 +269,6 @@ function addTooltipTabToTileConfig(app, html) {
   a.innerHTML = `<i class="fa-solid fa-comment-dots" inert=""></i><span>Tooltip</span>`;
   nav.appendChild(a);
 
-  // render panel
   const tplPath = `modules/${MODULE_ID}/templates/tile-tooltip-tab.hbs`;
 
   renderTemplate(tplPath, {
@@ -303,6 +321,44 @@ function addTooltipTabToTileConfig(app, html) {
         };
 
         journalSelect.addEventListener("change", (ev) => refillPages(ev.target.value ?? ""));
+      }
+
+      // Cache Now button — builds cache from current dropdown selections without requiring a save
+      const cacheBtn    = panel.querySelector(".tjt-cache-btn");
+      const cacheStatus = panel.querySelector(".tjt-cache-status");
+
+      if (cacheBtn) {
+        cacheBtn.addEventListener("click", async () => {
+          if (!game.user.isGM) return;
+
+          if (!tileDoc.id) {
+            if (cacheStatus) cacheStatus.textContent = "⚠️ Save the tile first, then cache.";
+            return;
+          }
+
+          cacheBtn.disabled = true;
+          cacheBtn.innerHTML = '<i class="fa-solid fa-rotate fa-spin"></i> Caching…';
+
+          try {
+            await buildCacheFromJournal(tileDoc, {
+              journalId: journalSelect?.value ?? "",
+              pageId:    pageSelect?.value    ?? ""
+            });
+
+            const ts = tileDoc.getFlag(MODULE_ID, FLAGS.cachedUpdated);
+            if (cacheStatus) {
+              cacheStatus.textContent = ts
+                ? `✅ Cached (last updated: ${formatCacheTimestamp(ts)})`
+                : "⚠️ Cache failed";
+            }
+          } catch (err) {
+            console.error(`${MODULE_ID} | Cache Now failed`, err);
+            if (cacheStatus) cacheStatus.textContent = "❌ Cache failed (see console)";
+          } finally {
+            cacheBtn.disabled = false;
+            cacheBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Cache Now';
+          }
+        });
       }
 
       // rebind tab controller(s)
@@ -403,6 +459,7 @@ function attachCanvasHoverListener() {
   if (_tjtHover.onLeave) canvas.app.view.removeEventListener("mouseleave", _tjtHover.onLeave);
 
   _tjtHover.tileId = null;
+  hideTooltip();
 
   // ensure stage receives pointer events everywhere (even over empty space)
   try {
@@ -472,6 +529,14 @@ Hooks.once("ready", () => {
     mouseX = ev.clientX;
     mouseY = ev.clientY;
     if (tooltipEl?.style.display === "block") positionTooltip();
+
+    // fix v0.4.0 hide tooltip if the cursor moves over an open Foundry window
+    if (ev.target?.closest?.(".app, .application")) {
+      if (_tjtHover.tileId) {
+        _tjtHover.tileId = null;
+        hideTooltip();
+      }
+    }
   });
 
   // gm caching: when tooltip flags change (usually saving TileConfig), rebuild cache

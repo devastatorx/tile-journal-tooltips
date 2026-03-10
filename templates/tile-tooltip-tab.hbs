@@ -16,7 +16,7 @@
         <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
       {{/each}}
     </select>
-    <p class="notes">Pick the Journal Entry that provides the tooltip text (GM-only read; cached to tile).</p>
+    <p class="notes">Select the Journal Entry that provides the tooltip text (players do not require permissions; cached to tile).</p>
   </div>
 
   <div class="form-group">
@@ -36,18 +36,28 @@
   <hr/>
 
   <div class="form-group">
-    <label>Cache status</label>
+    <label>Cache Status</label>
     <div class="form-fields">
-      <span>
+      <span class="tjt-cache-status">
         {{#if hasCache}}
           ✅ Cached (last updated: {{cacheUpdated}})
         {{else}}
-          ⚠️ Not cached yet (GM must Save this tile)
+          ⚠️ Not cached yet
         {{/if}}
       </span>
     </div>
     <p class="notes">
-      Players see only cached content. If you change the Journal text, re-open tile config and Save (or just toggle enable off/on and Save).
+      Players see only cached content. If you update the Journal text, use the Cache Now button or re-save the tile to refresh it.
     </p>
+  </div>
+
+  <div class="form-group">
+    <label></label>
+    <div class="form-fields">
+      <button type="button" class="tjt-cache-btn">
+        <i class="fa-solid fa-rotate"></i> Cache Now
+      </button>
+    </div>
+    <p class="notes">Caches the currently selected journal and page immediately, without requiring a full save.</p>
   </div>
 </div>

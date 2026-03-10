@@ -30,4 +30,16 @@
 #tjt-tooltip img {
   max-width: 100%;
   height: auto;
+  display: block;
+}
+
+#tjt-tooltip .tjt-image-page {
+  text-align: center;
+}
+
+#tjt-tooltip .tjt-caption {
+  margin-top: 5px;
+  font-size: 11px;
+  opacity: 0.75;
+  font-style: italic;
 }
