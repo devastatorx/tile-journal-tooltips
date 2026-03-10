@@ -16,16 +16,16 @@ You can create a blank/empty tile over any area or areas of a scene to make the 
 ---
  Update
 
-0.4.0
-    + Added support for displaying images.  Tooltips now display images present in 'Text' type journal pages and 'Image' type journal pages
-    + Fixed tooltips displaying when mouse moves over/hovers a tile with an active tooltip but was beneath another Foundry window such as a character sheet, a compendium, etc..
-    + Fixed tooltip would persist if displayed when a new scene was loaded
-    + Fixed caching bugs
-    + added manual 'Cache Now' button
-    + Fixed Foundry console error when caching on a tile that was just created but not yet saved
+**0.4.0**
++ Added support for displaying images.  Tooltips now display images present in 'Text' type journal pages and 'Image' type journal pages
++ Fixed tooltips displaying when mouse moves over/hovers a tile with an active tooltip but was beneath another Foundry window such as a character sheet, a compendium, etc..
++ Fixed tooltip would persist if displayed when a new scene was loaded
++ Fixed caching bugs
++ added manual 'Cache Now' button
++ Fixed Foundry console error when caching on a tile that was just created but not yet saved
 
-0.3.0
-    + initial release
+**0.3.0**
++ initial release
 
 ---
  Installation
