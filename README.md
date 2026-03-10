@@ -10,7 +10,7 @@ This can be used for environmental descriptions, map lore, reminders, making map
 
 Tile tooltips are triggered by mouse over/hover.  Tooltip content is pulled from Journal Entries or Journal Pages and players do not need journal permissions.  Does not conflict with and works alongside Monk's Active Tile Triggers ((MATT)), system agnostic, tooltips display only when the 'Token Control' layer is active.
 
-Example
+Example\
 You can create a blank/empty tile over any area or areas of a scene to make the scene background more interactive.  For example: if the scene background image is a map, you can add blank tiles to different loacations on the background and when the mouse is hovered over those locations, the tooltip will display.  You can also couple this with Monk's Active Tile Triggers to then also be able to click and interact; such as clicking to go to another scene
 
 ---
